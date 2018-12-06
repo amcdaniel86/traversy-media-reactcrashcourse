@@ -1,6 +1,6 @@
-
 import React, { Component } from 'react';
 
+import uuid from 'uuid';
 
 
 class AddProject extends Component {
@@ -22,6 +22,7 @@ handleSubmit(e){
       alert('title is required');
   } else {
       this.setState({newProject:{
+          id: uuid.v4(),
           title: this.refs.title.value,
           category: this.refs.category.value
         // this is the updated state that takes over initial state when handleSubmit function is ran, in this case everytime the form button Submit is clicked.
@@ -60,7 +61,9 @@ render() {
                   {/* goal is to have categories become properties of the component. */}
                 </select>
               </div>
+              <br />
             <input type="submit" value="Submit" />
+            <br />
           </form>
 
        {/* {this.props.test} */}
@@ -77,6 +80,10 @@ render() {
 
 // when returning in a render, everything has to be within one html element. a div, or nav, but only can be 1 html element at top level within return.
 
+  // AddProject.propTypes = {
+  //   categories: React.propType.array,
+  //   addProject: React.PropTypes.func
+  // }
 
 
 

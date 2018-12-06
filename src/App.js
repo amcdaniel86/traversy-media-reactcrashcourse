@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
+import $ from 'jquery';
+import uuid from 'uuid';
 import Projects from './Components/Projects';
 import AddProject from './Components/AddProject';
+import Todos from './Components/Todos';
 // .js not necessary at the end.
 
 // Blank React Application
@@ -24,28 +27,58 @@ class App extends Component {
     // initial state keys go here for 99% of components. most all have initial state sections at top of class section.
     // always define the state and the keys here but not the actual data. only for this example, data goes here.
         this.state = {
-            projects: []
+            projects: [],
+            todos: []
               // state called projects, keep projects: as an empty array in the constructor.
 
         }
   }
 
-// LifeCycle method: this below, fires off everytime the component is re-rendered. react docs show when these methods fire off. DidMount is different than WillMount for example.
-    componentWillMount(){
+    getToDos(){
+      $.ajax({
+        url:'https://jsonplaceholder.typicode.com/todos',
+        dataType: 'json',
+        cache: false,
+        success: function(data){
+            this.setState({todos: data}, function(){
+              console.log(this.state);
+            })
+        }.bind(this),
+        error: function(xhr, status, err){
+        console.log(err);
+        }
+      });
+
+    }
+// above describes how to get data from an api and push it into our react app.
+
+
+    getProjects(){
       this.setState({projects: [
         {
+          id:uuid.v4(),
+          // each time this is used, it creates a new id.
           title: 'business website',
           category: 'web design'
         },
         {
+          id:uuid.v4(),
           title: 'social app',
           category: 'mobile development'
         },
         {
+          id:uuid.v4(),
           title: 'ecommerce shopping cart',
           category: 'web development'
         }
       ]})
+    }
+
+
+// LifeCycle method: this below, fires off everytime the component is re-rendered. react docs show when these methods fire off. DidMount is different than WillMount for example.
+    componentWillMount(){
+        this.getProjects();
+        this.getToDos();
     }
     // if using an ajax call, to communicate with an API, it is done here in a LifeCycle Method as well.
     // much better to have data, if data is within App.js; better to have the data in componentWillMount(){}
@@ -56,6 +89,13 @@ class App extends Component {
 
   // state is immutable, don't want to change state, you want to update it, push the new project to the state, and then push it again.
 
+      componentDidMount(){
+          this.getToDos();
+
+      }
+
+
+
       handleAddProject(project){
         // console.log(project); used to test
           let projects = this.state.projects;
@@ -64,6 +104,15 @@ class App extends Component {
 
       }
 
+
+      handleDeleteProject(id){
+          let projects = this.state.projects;
+          // grab it from its current state. then remove the project we want and then reset the state.
+          let index = projects.findIndex(x => x.id === id);
+          // look through all the projects, find all the id's, match them to current id being passed in
+          projects.splice(index, 1);
+          this.setState({projects:projects});
+      }
 
   render() {
     return (
@@ -76,10 +125,13 @@ class App extends Component {
 
           {/* test to be sure the components are talking: <Projects test="Hello World" /> */}
 
-          <Projects projects={this.state.projects} />
+          <Projects projects={this.state.projects} onDelete={this.handleDeleteProject.bind(this)}/>
           {/* projects={} is required when we pass the initial state on to the child components. */}
           {/* in this case, App.js passes {this.state.projects} into the Projects component. Passing it into projects as a property. */}
             {/* required when you import it at top of the screen. */}
+            <hr />
+            <Todos todos={this.state.todos} />
+            {/* must pass along the todos we have in state. */}
 
       </div>
     );

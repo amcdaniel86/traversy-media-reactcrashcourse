@@ -1,26 +1,26 @@
 // will list all projects
 import React, { Component } from 'react';
-import ProjectItem from './ProjectItem';
+import TodoItem from './TodoItem';
 // blank React Application
 
-class Projects extends Component {
+class Todos extends Component {
   
-    deleteProject(id){
-      this.props.onDelete(id);
-        // onDelete = property
-    }
+    // deleteProject(id){
+    //   this.props.onDelete(id);
+    //     // onDelete = property
+    // }
 
 
   render() {
-    let projectItems;
-      if(this.props.projects){
-        // projects = property
+    let todoItems;
+      if(this.props.todos){
+        // passing in todos as properties
         // test to see if there are any projects with if statement. props = product object
-          projectItems = this.props.projects.map(project => {
+          todoItems = this.props.todos.map(todo => {
             // inside Projects.js, mapping through the projects array,
               // console.log(project);
               return (
-                  <ProjectItem onDelete={this.deleteProject.bind(this)} key={project.title} project={project} />
+                  <TodoItem key={todo.title} todo={todo} />
                   // outputting a ProjectItem component
                   // good to have key there, usually id is placed there.
                   // pass in project={project} as a property into the ProjectItem.js component because ProjectItem is a child component of Projects.js.
@@ -35,9 +35,9 @@ class Projects extends Component {
 
 
     return (
-      <div className="Projects">
-      <h3>Latest Projects</h3>
-       {projectItems}
+      <div className="Todos">
+      <h3>To Do List</h3>
+       {todoItems}
 
        
        
@@ -55,13 +55,12 @@ class Projects extends Component {
 
 // when returning in a render, everything has to be within one html element. a div, or nav, but only can be 1 html element at top level within return.
 
-// Projects.propTypes = {
-//   projects: React.PropTypes.array,
-//   onDelete: React.PropTypes.func
+// Todos.propTypes = {
+//   todos: React.PropTypes.array,
+// 
 // }
 
-
-export default Projects;
+export default Todos;
 
 
 

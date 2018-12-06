@@ -4,15 +4,15 @@ import React, { Component } from 'react';
 
 // blank React Application
 
-class ProjectItem extends Component {
+class TodoItem extends Component {
 
   
-    deleteProject(id){
-      // console.log('test'); to test
-      this.props.onDelete(id);
+    // deleteProject(id){
+    //   // console.log('test'); to test
+    //   this.props.onDelete(id);
 
 
-    }
+    // }
     // click on button in this component but then pass it up to the main component so the result removes an actual project.
     // FIRST: pass it up to Projects.js
     // THEN: pass it up to main App.js file.
@@ -24,9 +24,9 @@ class ProjectItem extends Component {
 
 
     return (
-      <li className="Project">
+      <li className="Todo">
        
-        <strong>{this.props.project.title}</strong>: {this.props.project.category} <a href="#" onClick={this.deleteProject.bind(this, this.props.project.id)}>X</a>
+        <strong>{this.props.todo.title}</strong>
         {/* from Project.js, we output each project into a li on the ProjectItem.js component, with the original state's title and category all the way from grandparent component App.js in this case. */}
         {/* .id or .title will show what is configured from parent component in the object */}
 
@@ -46,14 +46,15 @@ class ProjectItem extends Component {
 }
 
 
-// ProjectItem.propTypes = {
-//   project: React.propTypes.object,
-//   onDelete: React.PropTypes.func
+// TodoItem.propTypes = {
+//   todo: React.propTypes.object,
+//   
 // }
 
+// easy to bring in data and bring it to our state. and put it into components throu-gh properties.
 
 
-export default ProjectItem;
+export default TodoItem;
 
 // when returning in a render, everything has to be within one html element. a div, or nav, but only can be 1 html element at top level within return.
 
