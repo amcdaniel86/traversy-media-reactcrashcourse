@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-
 import './App.css';
 import Projects from './Components/Projects';
+import AddProject from './Components/AddProject';
 // .js not necessary at the end.
 
 // Blank React Application
@@ -11,6 +11,8 @@ import Projects from './Components/Projects';
 // App.js component - IS PLACEHOLDER FOR ALL OTHER COMPONENTS, import components into the render.
 
 // All projects will be held in state, main idea. usually from API or database.
+
+// each component has its own state.
 
 
 class App extends Component {
@@ -28,7 +30,7 @@ class App extends Component {
         }
   }
 
-// LifeCycle method: this below, fires off everytime the component is re-rendered.
+// LifeCycle method: this below, fires off everytime the component is re-rendered. react docs show when these methods fire off. DidMount is different than WillMount for example.
     componentWillMount(){
       this.setState({projects: [
         {
@@ -45,16 +47,31 @@ class App extends Component {
         }
       ]})
     }
+    // if using an ajax call, to communicate with an API, it is done here in a LifeCycle Method as well.
+    // much better to have data, if data is within App.js; better to have the data in componentWillMount(){}
 
   // NEXT: (after declaring default state) take the initial state, begun above and then pass it into <Projects /> as a property
   
   // with an array of objects like this, you usually want to create a separate component for each individual item and map through those projects and output that component.
 
-  
+  // state is immutable, don't want to change state, you want to update it, push the new project to the state, and then push it again.
+
+      handleAddProject(project){
+        // console.log(project); used to test
+          let projects = this.state.projects;
+          projects.push(project);
+          this.setState({projects:projects});
+
+      }
+
+
   render() {
     return (
       <div className="App">
-       My App
+      
+       <AddProject addProject={this.handleAddProject.bind(this)} />
+       {/* now outputting the AddProject.js component. */}
+
           {this.props.test}
 
           {/* test to be sure the components are talking: <Projects test="Hello World" /> */}
