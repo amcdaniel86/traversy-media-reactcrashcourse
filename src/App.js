@@ -1,38 +1,55 @@
 import React, { Component } from 'react';
-// app component gateway to our main component.
+
 import './App.css';
 import Projects from './Components/Projects';
+// .js not necessary at the end.
 
-// blank React Application
+// Blank React Application
+
+// App.js is the component gateway to our main component.
+
+// App.js component - IS PLACEHOLDER FOR ALL OTHER COMPONENTS, import components into the render.
+
+// All projects will be held in state, main idea. usually from API or database.
+
 
 class App extends Component {
   constructor() {
     super();
+
+
+
     // initial state keys go here for 99% of components. most all have initial state sections at top of class section.
+    // always define the state and the keys here but not the actual data. only for this example, data goes here.
         this.state = {
-            projects: [
-                {
-                  title: 'business website',
-                  category: 'web design'
-                },
-                {
-                  title: 'social app',
-                  category: 'mobile development'
-                },
-                {
-                  title: 'ecommerce shopping cart',
-                  category: 'web development'
-                }
-            
-            ]
+            projects: []
+              // state called projects, keep projects: as an empty array in the constructor.
 
         }
-
-
   }
 
-  // NEXT: take the issued state for component and then pass it into <Projects /> as a property
+// LifeCycle method: this below, fires off everytime the component is re-rendered.
+    componentWillMount(){
+      this.setState({projects: [
+        {
+          title: 'business website',
+          category: 'web design'
+        },
+        {
+          title: 'social app',
+          category: 'mobile development'
+        },
+        {
+          title: 'ecommerce shopping cart',
+          category: 'web development'
+        }
+      ]})
+    }
+
+  // NEXT: (after declaring default state) take the initial state, begun above and then pass it into <Projects /> as a property
   
+  // with an array of objects like this, you usually want to create a separate component for each individual item and map through those projects and output that component.
+
   
   render() {
     return (
@@ -40,8 +57,11 @@ class App extends Component {
        My App
           {this.props.test}
 
+          {/* test to be sure the components are talking: <Projects test="Hello World" /> */}
+
           <Projects projects={this.state.projects} />
-          {/* projects={} is required when we pass the initial state on to other components. */}
+          {/* projects={} is required when we pass the initial state on to the child components. */}
+          {/* in this case, App.js passes {this.state.projects} into the Projects component. Passing it into projects as a property. */}
             {/* required when you import it at top of the screen. */}
 
       </div>
@@ -49,7 +69,12 @@ class App extends Component {
   }
 }
 
-// when returning in a render, everything has to be within one html element. a div, or nav, but only can be 1 html element at top level within return.
+ // only one grandparent div (html) element allowed inside of a this.render(){
+      //   return(
+      //     section. div goes here
+      //   )
+      // }
+
 
 
 
